@@ -10,6 +10,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <main-class-path>ua.rd.maven.App</main-class-path>
     </properties>
 
     <dependencies>
@@ -24,12 +27,30 @@
     <profiles>
         <profile>
             <id>execute-test</id>
+            <properties>
+                <customargument1>param1111</customargument1>
+                <customargument2>param2222</customargument2>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.4.0</version>
+
+                        <configuration>
+                            <mainClass>${main-class-path}</mainClass>
+                            <!--<commandlineArgs>${customargument2}</commandlineArgs>-->
+                            <arguments>
+                                <argument>${customargument1}</argument>
+                                <argument>${customargument2}</argument>
+                            </arguments>
+                        </configuration>
+
                         <executions>
                             <execution>
                                 <phase>install</phase>
@@ -39,26 +60,10 @@
                             </execution>
                         </executions>
 
-                        <configuration>
-                            <mainClass>ua.rd.maven.App</mainClass>
-                        </configuration>
-
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
-    <!--<configuration>-->
-    <!--<executable>java</executable>-->
-    <!--<arguments>-->
-    <!--&lt;!&ndash;<argument>-Dmyproperty=myvalue</argument>&ndash;&gt;-->
-    <!--&lt;!&ndash;<argument>com.example.Main</argument>&ndash;&gt;-->
-
-    <!--<argument>-Dexec.mainClass="ua.rd.maven.App"</argument>-->
-    <!--<argument>-Dexec.args="argument2"</argument>-->
-
-    <!--</arguments>-->
-    <!--</configuration>-->
 
 </project>
